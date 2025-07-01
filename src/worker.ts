@@ -46,8 +46,10 @@ class CoverageWorker {
     await macrotick(); // wait one tick to give the event loop some space to run
 
     const [file] = this.#queue as [string, ...string[]];
+    console.log(`[CoverageWorker] #convert: processing file=${file}`);
 
     const coverage: unknown = JSON.parse(await fs.readFile(file, 'utf-8'));
+    console.log(`[CoverageWorker] #convert: parsed coverage=${JSON.stringify(coverage, null, 2)}`);
     await fs.unlink(file);
 
     if (isProcessCov(coverage)) {
